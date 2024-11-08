@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="my-4">Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="{{ url_for('main.productdetail', id=product.id) }}">
+                    <img class="bd-placeholder-img card-img-top" src="{{ url_for('static', filename='img/' + product.image) }}" alt="{{ product.name }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ url_for('main.productdetail', id=product.id) }}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                    </h5>
+                    <p class="card-text">${{ product.price }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ url_for('main.productdetail', id=product.id) }}" class="btn btn-info">View Details</a>
+                    <form action="{{ url_for('main.order') }}" method="POST">
+                        <input type="hidden" id="product_id" name="product_id" value="{{ product.id }}">
+                        <input class="btn btn-primary" type="submit" value="Add to Cart">
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
